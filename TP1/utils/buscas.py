@@ -1,16 +1,3 @@
-"""Algoritmos de busca aplicados ao problema da Ponte e da Tocha.
-
-Todas as funcoes compartilham a mesma assinatura
-
-    busca_X(problema, limite_nos=...) -> ResultadoBusca
-
-o que permite que o executor trate os metodos de forma uniforme na
-comparacao experimental. Conforme recomendado no enunciado, toda busca
-interrompe a execucao apos um numero fixo e elevado de nos expandidos,
-evitando buscas excessivamente longas -- precaucao especialmente
-importante para a busca em profundidade.
-"""
-
 import heapq
 import itertools
 import time
@@ -34,23 +21,7 @@ def busca_profundidade(
     limite_nos: int = LIMITE_NOS_PADRAO,
     limite_profundidade: Optional[int] = None,
 ) -> ResultadoBusca:
-    """Busca em profundidade (DFS) com poda de ciclos.
-
-    A fronteira e uma pilha (LIFO): o ultimo no gerado e o primeiro a ser
-    expandido, de modo que a busca desce o mais fundo possivel em um ramo
-    antes de retroceder.
-
-    Como toda acao do problema e reversivel (quem atravessa pode voltar), o
-    grafo de estados possui ciclos e a DFS ingenua nao termina. Por isso
-    aplica-se a *poda de ciclos*: um sucessor so entra na fronteira se o seu
-    estado ainda nao aparece no caminho da raiz ate o no atual. Essa poda
-    preserva a completude em espacos finitos, ao contrario da eliminacao
-    global de estados repetidos, que descartaria caminhos alternativos que a
-    DFS ainda precisa explorar.
-
-    A DFS nao oferece garantia de otimalidade: ela devolve a primeira
-    solucao encontrada, que depende apenas da ordem de expansao.
-    """
+    """Busca em profundidade (DFS) com poda de ciclos."""
     inicio = time.perf_counter()
     resultado = ResultadoBusca(algoritmo="Busca em Profundidade (DFS)")
 
@@ -100,20 +71,7 @@ def busca_largura(
     problema: ProblemaPonteTocha,
     limite_nos: int = LIMITE_NOS_PADRAO,
 ) -> ResultadoBusca:
-    """Busca em largura (BFS) com eliminacao de estados repetidos.
-
-    A fronteira e uma fila (FIFO): os nos sao expandidos na ordem em que
-    foram gerados, o que faz a busca varrer o grafo nivel a nivel.
-
-    A BFS e completa e devolve a solucao com o menor *numero de travessias*.
-    Como o custo das arestas nao e uniforme -- cada travessia custa o tempo
-    da pessoa mais lenta do grupo --, minimizar o numero de arestas nao e o
-    mesmo que minimizar o tempo total, e portanto a BFS nao garante a
-    solucao otima para este problema.
-
-    O teste de objetivo e feito na geracao do sucessor, variante usual da
-    BFS que evita expandir um nivel inteiro desnecessariamente.
-    """
+    """Busca em largura (BFS) com eliminacao de estados repetidos. """
     inicio = time.perf_counter()
     resultado = ResultadoBusca(algoritmo="Busca em Largura (BFS)")
 
@@ -168,28 +126,7 @@ def busca_a_estrela(
     limite_nos: int = LIMITE_NOS_PADRAO,
     nome: str = "Busca A*",
 ) -> ResultadoBusca:
-    """Busca A*.
 
-    O A* combina a busca de custo minimo (*lowest-cost-first search*) com a
-    informacao fornecida por uma funcao heuristica. Para um caminho
-    ``p = <v0, v1, ..., vn>`` presente na fronteira, com ``vn`` como ultimo
-    no, define-se
-
-        ``f(p) = custo(p) + h(vn) = g(vn) + h(vn)``
-
-    isto e, uma estimativa do custo total do caminho que passa por ``p`` e
-    segue ate o no objetivo. A fronteira e uma fila de prioridade ordenada
-    por ``f``, e o caminho de menor ``f`` e sempre o proximo a ser expandido.
-
-    Se ``h`` for admissivel, o primeiro caminho objetivo removido da
-    fronteira e garantidamente de custo minimo. Para nao depender da
-    hipotese mais forte de consistencia, a implementacao mantem o melhor
-    ``g`` conhecido por estado e reabre um estado sempre que um caminho mais
-    barato ate ele e descoberto (*multiple-path pruning* seguro).
-
-    O desempate por um contador crescente torna a ordem de expansao
-    deterministica entre nos de mesmo ``f``.
-    """
     inicio = time.perf_counter()
     resultado = ResultadoBusca(algoritmo=nome)
 
