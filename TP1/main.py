@@ -1,16 +1,3 @@
-"""Ponto de entrada do TP1 -- Problema da Ponte e da Tocha.
-
-Executa os tres metodos de busca implementados (DFS, BFS e A* com duas
-heuristicas admissiveis), imprime a solucao encontrada por cada um e a
-tabela comparativa de custo, nos expandidos e tempo de processamento.
-
-Uso::
-
-    python main.py                # executa a comparacao
-    python main.py --verificar    # executa tambem as verificacoes formais
-    python main.py --escala       # compara h1 e h2 em instancias maiores
-"""
-
 import argparse
 import heapq
 import os
@@ -37,13 +24,7 @@ from utils.metricas import ResumoExecucoes  # noqa: E402
 
 
 def custos_otimos(problema: ProblemaPonteTocha) -> Dict[Estado, int]:
-    """Custo otimo ``h*(s)`` de cada estado ate o objetivo.
-
-    Implementacao independente das buscas do trabalho: um Dijkstra sobre o
-    grafo reverso, partindo dos estados objetivo. Serve de referencia para
-    validar tanto o custo otimo encontrado quanto a admissibilidade das
-    heuristicas.
-    """
+    """Calcula o custo otimo de cada estado alcancavel usando Dijkstra reverso."""
     reverso: Dict[Estado, List[tuple]] = {}
     for estado in problema.estados_alcancaveis():
         for transicao in problema.sucessores(estado):
