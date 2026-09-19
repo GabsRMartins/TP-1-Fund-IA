@@ -6,21 +6,21 @@ from typing import Dict, List
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from entities.estado import Estado  # noqa: E402
-from services.executor import (  # noqa: E402
+from entities.estado import Estado  
+from services.executor import (  
     REPETICOES_PADRAO,
     executar,
     experimento_escalabilidade,
 )
-from services.problema import ProblemaPonteTocha  # noqa: E402
-from utils.buscas import (  # noqa: E402
+from services.problema import ProblemaPonteTocha  
+from utils.buscas import (  
     LIMITE_NOS_PADRAO,
     busca_a_estrela,
     busca_largura,
     busca_profundidade,
 )
-from utils.heuristicas import h1_mais_lento, h2_soma_alternada  # noqa: E402
-from utils.metricas import ResumoExecucoes  # noqa: E402
+from utils.heuristicas import h1_mais_lento, h2_soma_alternada  
+from utils.metricas import ResumoExecucoes  
 
 
 def custos_otimos(problema: ProblemaPonteTocha) -> Dict[Estado, int]:
